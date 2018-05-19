@@ -1,0 +1,12 @@
+{
+    "java.configuration.updateBuildConfiguration": "automatic",
+    "editor.renderWhitespace": "all",
+    "editor.detectIndentation": false,
+    "editor.insertSpaces": true,
+    "[java]": {
+        "editor.tabSize": 4
+    },
+    "[xml]": {
+        "editor.tabSize": 2
+    }
+}
