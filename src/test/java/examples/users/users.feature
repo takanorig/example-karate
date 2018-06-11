@@ -52,4 +52,3 @@ Given path id
 # When method get
 # Then status 200
 # And match response contains user
-

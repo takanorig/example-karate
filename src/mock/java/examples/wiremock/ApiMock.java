@@ -6,7 +6,7 @@ import static com.github.tomakehurst.wiremock.client.WireMock.get;
 import static com.github.tomakehurst.wiremock.client.WireMock.okJson;
 import static com.github.tomakehurst.wiremock.client.WireMock.post;
 import static com.github.tomakehurst.wiremock.client.WireMock.stubFor;
-import static com.github.tomakehurst.wiremock.core.WireMockConfiguration.options;
+import static com.github.tomakehurst.wiremock.core.WireMockConfiguration.wireMockConfig;
 
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -16,6 +16,7 @@ import com.github.tomakehurst.wiremock.WireMockServer;
 import com.github.tomakehurst.wiremock.client.ResponseDefinitionBuilder;
 import com.github.tomakehurst.wiremock.common.FileSource;
 import com.github.tomakehurst.wiremock.common.Json;
+import com.github.tomakehurst.wiremock.core.WireMockConfiguration;
 import com.github.tomakehurst.wiremock.extension.Parameters;
 import com.github.tomakehurst.wiremock.extension.ResponseDefinitionTransformer;
 import com.github.tomakehurst.wiremock.http.Request;
@@ -72,8 +73,13 @@ public class ApiMock {
         RentalService service = new RentalService();
         service.initialize();
 
-        WireMockServer wireMockServer = new WireMockServer(
-                options().port(8089).extensions(new RentResponseTransformer(service)));
+        // WireMockServer wireMockServer = new WireMockServer(
+        // options().port(8089).extensions(new RentResponseTransformer(service)));
+
+        WireMockConfiguration config = wireMockConfig().port(8089);
+        config.extensions(new RentResponseTransformer(service));
+        WireMockServer wireMockServer = new WireMockServer(config);
+
         wireMockServer.start();
 
         setUpStub(service);
@@ -102,8 +108,10 @@ public class ApiMock {
             return new ResponseDefinitionBuilder()
                     // Status
                     .withStatus(status)
-                    // Response
-                    .withHeader("Content-Type", "application/json").withBody("{\"result\":" + result + "}")
+                    // Response Header
+                    .withHeader("Content-Type", "application/json")
+                    // Response Body
+                    .withBody("{\"result\":" + result + "}")
                     // Build
                     .build();
         }
@@ -111,6 +119,11 @@ public class ApiMock {
         @Override
         public String getName() {
             return "do-rent-transform";
+        }
+
+        @Override
+        public boolean applyGlobally() {
+            return false;
         }
     }
 }
