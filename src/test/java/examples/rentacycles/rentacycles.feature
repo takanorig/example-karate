@@ -6,14 +6,14 @@ Feature: レンタサイクルAPIのテスト
 Background:
 * url 'http://localhost:8089'
 
-Scenario: get all rentacycles
+Scenario: Get all rentacycles
 
-    Given path 'rentacycles'
+    Given path '/rentacycles'
     When method get
     Then status 200
         And assert response.size() === 5
 
-Scenario: Rent a cycle
+Scenario: Rent / Return the cycle
 
     # 空き車両一覧取得
     Given path '/rentacycles'
@@ -51,3 +51,22 @@ Scenario: Rent a cycle
         And request {"id": #(rentId)}
     When method post
     Then status 409
+
+    # 返却処理
+    Given path '/rentacycles/return'
+        And request {"id": #(rentId)}
+    When method post
+    Then status 200
+        And match response == 
+        """
+        {
+            "result" : true
+        }
+        """
+
+    # 空き車両一覧取得
+    Given path '/rentacycles'
+        And param available = true
+    When method get
+    Then status 200
+        And assert response.size() === 3

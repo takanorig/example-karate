@@ -9,10 +9,10 @@ import java.util.stream.Collectors;
 /**
  * レンタルサービス
  */
-public class RentalService {
+public class RentaCycleService {
     private Map<String, RentaCycle> rentaCycleMap = new LinkedHashMap<>();
 
-    public RentalService() {
+    public RentaCycleService() {
     }
 
     /**
@@ -67,6 +67,19 @@ public class RentalService {
         }
 
         cycle.rent();
+        return true;
+    }
+
+    /**
+     * 車両を返却する。
+     */
+    public boolean rentReturn(String cycleId) {
+        RentaCycle cycle = this.rentaCycleMap.get(cycleId);
+        if (cycle == null || cycle.isRent() == false) {
+            return false;
+        }
+
+        cycle.rentReturn();
         return true;
     }
 
