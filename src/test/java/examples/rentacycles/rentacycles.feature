@@ -21,21 +21,21 @@ Scenario: Rent / Return the cycle
     When method get
     Then status 200
         And assert response.size() === 3
-        And match response contains {"id": "A001", "rent": false}
-        And match response contains {"id": "A002", "rent": false}
-        And match response contains {"id": "A003", "rent": false}
+        And match response contains {id: 'A001', rent: false}
+        And match response contains {id: 'A002', rent: false}
+        And match response contains {id: 'A003', rent: false}
 
     # レンタル処理
     * def rentId = response[0].id
     * print rentId
     Given path '/rentacycles/rent'
-        And request {"id": #(rentId)}
+        And request {id: #(rentId)}
     When method post
     Then status 200
         And match response == 
         """
         {
-            "result" : true
+            result : true
         }
         """
 
@@ -48,19 +48,19 @@ Scenario: Rent / Return the cycle
 
     # レンタル処理（不可）
     Given path '/rentacycles/rent'
-        And request {"id": #(rentId)}
+        And request {id: #(rentId)}
     When method post
     Then status 409
 
     # 返却処理
     Given path '/rentacycles/return'
-        And request {"id": #(rentId)}
+        And request {id: #(rentId)}
     When method post
     Then status 200
         And match response == 
         """
         {
-            "result" : true
+            result : true
         }
         """
 
