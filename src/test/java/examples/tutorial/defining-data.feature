@@ -5,7 +5,12 @@ Feature: データの指定方法に関するサンプル
 # -----------------------------------------------
 Scenario: Normal def
 
+* def text = 'karate example'
+* print text
+* match text == 'karate example'
+
 * def jatext = '日本語のテキスト'
+* print jatext
 * match jatext == '日本語のテキスト'
 
 
@@ -14,6 +19,7 @@ Scenario: Normal def
 # -----------------------------------------------
 Scenario: JSON Format
 
+# MultilineでのJSON指定
 * def jsonData = 
 """
 [
@@ -23,6 +29,10 @@ Scenario: JSON Format
 ]
 """
 * match jsonData == [{name: 'Bob', age: 2}, {name: 'Wild', age: 4}, {name: 'Nyan', age: 3}]
+
+# 値の変更
+* set jsonData[0].age = 3
+* match jsonData == [{name: 'Bob', age: 3}, {name: 'Wild', age: 4}, {name: 'Nyan', age: 3}]
 
 # table指定
 * table jsonAsTable
@@ -60,7 +70,7 @@ Scenario: Replace parameters
 * replace text2.${foo} = 'bar'
 * match text2 == 'hello bar world'
 
-# 複数のパラメターの置換
+# 複数のパラメータの置換
 * def text3 = 'hello <val1> world <val2> bye'
 
 * replace text3
