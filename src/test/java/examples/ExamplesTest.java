@@ -1,8 +1,11 @@
 package examples;
 
+import com.intuit.karate.KarateOptions;
 import com.intuit.karate.junit4.Karate;
+
 import org.junit.runner.RunWith;
 
+@KarateOptions(tags = "~@ignore")
 @RunWith(Karate.class)
 public class ExamplesTest {
     // this will run all *.feature files that exist in sub-directories
