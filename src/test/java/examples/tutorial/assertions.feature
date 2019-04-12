@@ -130,7 +130,7 @@ Scenario: Contains Matching
 
 # marker
 * def test = {id: '001', name: { first: 'John', last: 'Smith' }, age: 20}
-* match test == {id: '#string', name: '#notnull', age: '#number'}
+* match test contains {id: '#string', name: '#notnull', age: '#number'}
 
 
 # -----------------------------------------------

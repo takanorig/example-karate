@@ -16,6 +16,9 @@ Scenario: get all users and then get the first user by id
 Given path 'users'
 When method get
 Then status 200
+    And assert response.size() === 10
+    And assert response[0].id == 1
+    And match response[0] contains { id: 1, name: "Leanne Graham" }
 
 * def first = response[0]
 
