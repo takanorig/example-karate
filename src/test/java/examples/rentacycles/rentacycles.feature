@@ -1,8 +1,15 @@
 @ignore
 Feature: レンタサイクルAPIのテスト
     このテストを実行する際は、事前に、WireMockを利用したモックサーバーを立ち上げておく必要があります。
-    以下のクラスを実行することで、モックサーバーが立ち上がります。
-        src/mock/java/examples/wiremock/ApiMock.java
+    以下のいずれかの方法で、モックサーバーを立ち上げることができます。
+        方法1) WireMock版
+          ・以下のクラスを実行することで、モックサーバーが立ち上がります。
+            src/mock/java/examples/wiremock/ApiMock.java
+        方法2) Karate Test Double版
+          ・以下の feature ファイルを実行することで、モックサーバーが立ち上がります。
+            src/mock/java/examples/rentacycles/rentacycles-service-mock.feature
+          ・以下のコマンドで、Karateをモックサーバーとして立ち上げることができます。
+            java -jar karate.jar -p 8089 -m rentacycles-service-mock.feature
 
 Background:
 * url 'http://localhost:8089'
