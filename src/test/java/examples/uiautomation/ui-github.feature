@@ -39,20 +39,18 @@ Scenario: Search2 intuit/karate in GitHub
 
     # ブラウザで動作させるJSは、Karate自体の JS Function とは定義方法が異なる。
     # 関数自体は、文字列として定義し、それを driver.eval で実行させる。
-    # 以下は、function(selector) 自体は、Karate内部で動作さうる部分であるが、
-    # return 後の部分は、ブラウザ内で動作する内容となる。
-    * def formSubmitWebFn =
+    # 以下は、JS Function を文字列として定義し、変数部分は replace を使って置換している。
+    * text formSubmitWebFn =
         """
-        function(selector) {
-            return "var formElem = document.querySelector('" + selector + "');"
-                 + "formElem.submit();"
-        }
+        var formElem = document.querySelector('${selector}');
+        formElem.submit();
         """
+    * replace formSubmitWebFn.${selector} = '#search_form'
 
     Given driver 'https://github.com/search'
         And eval driver.waitUntil(driver.title == 'Code Search · GitHub')
         And driver.input('input[name=q]', keyword)
-    When eval driver.eval(formSubmitWebFn('#search_form'))
+    When eval driver.eval(formSubmitWebFn)
     Then eval driver.waitUntil(driver.location == 'https://github.com/search?utf8=%E2%9C%93&q=' + keyword + '&ref=simplesearch')
         And match driver.title == 'Search · karate · GitHub'
 
