@@ -1,8 +1,10 @@
 package examples.tutorial;
 
-import com.intuit.karate.junit4.Karate;
-import org.junit.runner.RunWith;
+import com.intuit.karate.junit5.Karate;
 
-@RunWith(Karate.class)
 public class TutorialRunner {
+    @Karate.Test
+    Karate test() {
+        return Karate.run("tutorial").relativeTo(getClass());
+    }    
 }

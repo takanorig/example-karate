@@ -1,14 +1,16 @@
 package examples;
 
-import com.intuit.karate.KarateOptions;
-import com.intuit.karate.junit4.Karate;
+import com.intuit.karate.junit5.Karate;
 
-import org.junit.runner.RunWith;
+class ExamplesTest {
 
-@KarateOptions(tags = "~@ignore")
-@RunWith(Karate.class)
-public class ExamplesTest {
-    // this will run all *.feature files that exist in sub-directories
-    // refer to https://github.com/intuit/karate#naming-conventions
-    // for folder-structure recommendations and naming conventions
+    // @Karate.Test
+    // Karate testAll() {
+    // return Karate.run().relativeTo(getClass());
+    // }
+
+    @Karate.Test
+    Karate testExcludesIgnore() {
+        return Karate.run().tags("~@ignore").relativeTo(getClass());
+    }
 }

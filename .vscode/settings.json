@@ -8,5 +8,7 @@
     },
     "[xml]": {
         "editor.tabSize": 2
-    }
+    },
+    "java.format.enabled": true,
+    "karateRunner.karateRunner.default": "_SyncRunner"
 }

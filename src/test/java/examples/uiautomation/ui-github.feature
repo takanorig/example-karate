@@ -1,3 +1,4 @@
+@ignore
 Feature: GitHubに対するUI操作
   https://intuit.github.io/karate/karate-core/
 
