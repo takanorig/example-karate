@@ -94,6 +94,7 @@ public class RentResponseTransformer extends ResponseDefinitionTransformer {
     /**
      * レンタル処理
      */
+    @SuppressWarnings("unchecked")
     private ResponseDefinition doRent(Request request, ResponseDefinitionBuilder newResponseDefBuilder) {
         String json = request.getBodyAsString();
         Map<String, ?> requestMap = Json.read(json, LinkedHashMap.class);
@@ -117,7 +118,8 @@ public class RentResponseTransformer extends ResponseDefinitionTransformer {
     /**
      * 返却処理
      */
-    private ResponseDefinition doReturn(Request request, ResponseDefinitionBuilder newResponseDefBuilder) {
+    @SuppressWarnings("unchecked")
+     private ResponseDefinition doReturn(Request request, ResponseDefinitionBuilder newResponseDefBuilder) {
         String json = request.getBodyAsString();
         Map<String, ?> requestMap = Json.read(json, LinkedHashMap.class);
         String id = requestMap.get("id").toString();

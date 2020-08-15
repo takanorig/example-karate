@@ -17,17 +17,16 @@ Scenario: Search intuit/karate in GitHub
     * def keyword = 'karate'
 
     Given driver 'https://github.com/search'
-        And eval driver.waitUntil(driver.title == 'Code Search · GitHub')
-        And driver.input('input[name=q]', keyword)
-    When driver.submit('#search_form button.btn')
-    Then eval driver.waitUntil(driver.location == 'https://github.com/search?utf8=%E2%9C%93&q=' + keyword + '&ref=simplesearch')
-        And eval driver.title == 'Search · karate · GitHub'
+        And waitUntil("document.title == 'Code Search · GitHub'")
+        And input('input[name=q]', keyword)
+    When submit().click('#search_form button.btn')
+        And waitForUrl('/github.com/search?utf8=%E2%9C%93&q=' + keyword + '&ref=simplesearch')
+    Then match driver.title == 'Search · karate · GitHub'
 
-    * print driver.text('li.repo-list-item h3:first-child a')
-    * match driver.text('li.repo-list-item h3:first-child a') == 'intuit/karate'
+    * print text('li.repo-list-item div.f4:first-child a')
+    * match text('li.repo-list-item div.f4:first-child a') == 'intuit/karate'
 
-    * def bytes = driver.screenshot()
-    * eval karate.embed(bytes, 'image/png')
+    * screenshot()
 
 
 # -----------------------------------------------
@@ -49,17 +48,16 @@ Scenario: Search2 intuit/karate in GitHub
     * replace formSubmitWebFn.${selector} = '#search_form'
 
     Given driver 'https://github.com/search'
-        And eval driver.waitUntil(driver.title == 'Code Search · GitHub')
-        And driver.input('input[name=q]', keyword)
-    When eval driver.eval(formSubmitWebFn)
-    Then eval driver.waitUntil(driver.location == 'https://github.com/search?utf8=%E2%9C%93&q=' + keyword + '&ref=simplesearch')
-        And match driver.title == 'Search · karate · GitHub'
+        And waitUntil("document.title == 'Code Search · GitHub'")
+        And input('input[name=q]', keyword)
+    When script(formSubmitWebFn)
+        And waitForUrl('/github.com/search?utf8=%E2%9C%93&q=' + keyword + '&ref=simplesearch')
+    Then match driver.title == 'Search · karate · GitHub'
 
-    * print driver.text('li.repo-list-item h3:first-child a')
-    * match driver.text('li.repo-list-item h3:first-child a') == 'intuit/karate'
+    * print text('li.repo-list-item div.f4:first-child a')
+    * match text('li.repo-list-item div.f4:first-child a') == 'intuit/karate'
 
-    * def bytes = driver.screenshot()
-    * eval karate.embed(bytes, 'image/png')
+    * screenshot()
 
 
 # -----------------------------------------------
@@ -70,12 +68,10 @@ Scenario: Get star-history of intuit/karate
     * def repo = 'intuit/karate'
 
     Given driver 'https://star-history.t9t.io/'
-        And eval driver.waitUntil(driver.title == 'Star history')
-        And driver.input('input#repo', repo)
-    When driver.click('button#theBtn')
-    Then eval driver.waitUntil(driver.location == 'https://star-history.t9t.io/#' + repo)
+        And waitUntil("document.title == 'Star history'")
+        And input('input#repo', repo)
+    When click('button#theBtn')
+        And waitForUrl('/star-history.t9t.io/#' + repo)
+    Then match value('input#repo') == repo
 
-    * match driver.value('input#repo') == repo
-
-    * def bytes = driver.screenshot()
-    * eval karate.embed(bytes, 'image/png')
+    * screenshot()

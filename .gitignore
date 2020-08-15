@@ -1,1 +1,6 @@
-/target
+# Gradle
+.gradle
+!gradle-wrapper.jar
+
+# Maven
+target
